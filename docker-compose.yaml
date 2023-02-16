@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+    backend:
+        build:
+            context: .
+            target: builder
+        command: air
+        env_file:
+            - .env
+        volumes:
+            - ./:/app/src
+        ports:
+            - "8000:8000"
+        networks:
+            - flash-card
+
+    postgres:
+        image: postgres:13.8
+        restart: always
+        env_file:
+            - .env
+        environment:
+            POSTGRES_DB: ${POSTGRES_DATABASE_NAME}
+            POSTGRES_HOST: ${POSTGRES_HOST}
+            POSTGRES_PORT: ${POSTGRES_PORT}
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./db-data/postgresql:/var/lib/postgresql/data
+            - ./db-data/docker-entrypoint:/docker-entrypoint-initdb.d
+        networks:
+            - flash-card
+
+networks:
+    flash-card:

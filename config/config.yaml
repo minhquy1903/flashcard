@@ -1,0 +1,13 @@
+# Server configurations
+server:
+    host: "localhost"
+    port: 8000
+
+#postgres configurations
+postgres:
+    host: postgres
+    port: 5432
+    user: postgres
+    password: postgres
+    database_name: flash-card
+    postgres_ssl_mode: false
