@@ -3,7 +3,7 @@ package db
 import (
 	"fmt"
 
-	"github.com/minhquy1903/flash-card-api/config"
+	"github.com/minhquy1903/flashcard-api/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

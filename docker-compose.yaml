@@ -13,7 +13,7 @@ services:
         ports:
             - "8000:8000"
         networks:
-            - flash-card
+            - flashcard
 
     postgres:
         image: postgres:13.8
@@ -32,7 +32,15 @@ services:
             - ./db-data/postgresql:/var/lib/postgresql/data
             - ./db-data/docker-entrypoint:/docker-entrypoint-initdb.d
         networks:
-            - flash-card
+            - flashcard
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
+        networks:
+            - flashcard
 
 networks:
-    flash-card:
+    flashcard:

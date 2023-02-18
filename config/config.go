@@ -7,6 +7,7 @@ import (
 )
 
 type Config struct {
+	JWTSecret        string `mapstructure:"JWT_SECRET"`
 	ServerPort       string `mapstructure:"SERVER_PORT"`
 	PostgresHost     string `mapstructure:"POSTGRES_HOST"`
 	PostgresPort     string `mapstructure:"POSTGRES_PORT"`

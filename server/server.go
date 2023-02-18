@@ -12,18 +12,16 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/minhquy1903/flash-card-api/config"
-	"gorm.io/gorm"
+	"github.com/minhquy1903/flashcard-api/config"
 )
 
 type Server struct {
 	Cfg  *config.Config
-	DB   *gorm.DB
 	Echo *echo.Echo
 }
 
-func NewServer(cfg *config.Config, db *gorm.DB, echo *echo.Echo) *Server {
-	return &Server{Cfg: cfg, DB: db, Echo: echo}
+func NewServer(cfg *config.Config, echo *echo.Echo) *Server {
+	return &Server{Cfg: cfg, Echo: echo}
 }
 
 func (s *Server) Run() {
