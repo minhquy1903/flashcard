@@ -26,7 +26,7 @@ func NewAuthService(userRepo repository.UserRepository, tokenManager token.Token
 
 func (s *AuthService) Register(c context.Context, registerReq presenter.RegisterRequest) error {
 
-	_, err := s.userRepo.GetByEmail(c, registerReq.Email)
+	_, err := s.userRepo.FindByEmail(c, registerReq.Email)
 
 	if err == nil {
 		return errors.New("your email is already existed")
@@ -48,7 +48,7 @@ func (s *AuthService) Register(c context.Context, registerReq presenter.Register
 }
 
 func (s *AuthService) Login(c context.Context, loginReq presenter.LoginRequest) (string, error) {
-	user, err := s.userRepo.GetByEmail(c, loginReq.Email)
+	user, err := s.userRepo.FindByEmail(c, loginReq.Email)
 	if err != nil {
 		return "", errors.New("your email or password is not valid")
 	}

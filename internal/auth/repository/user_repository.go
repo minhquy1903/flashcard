@@ -9,8 +9,8 @@ import (
 
 type UserRepository interface {
 	Create(ctx context.Context, user *model.User) error
-	GetByID(ctx context.Context, id int32) (*model.User, error)
-	GetByEmail(ctx context.Context, email string) (*model.User, error)
+	FindByID(ctx context.Context, id int32) (*model.User, error)
+	FindByEmail(ctx context.Context, email string) (*model.User, error)
 }
 
 type userRepository struct {
@@ -29,7 +29,7 @@ func (r *userRepository) Create(ctx context.Context, user *model.User) error {
 	return nil
 }
 
-func (r *userRepository) GetByID(ctx context.Context, id int32) (*model.User, error) {
+func (r *userRepository) FindByID(ctx context.Context, id int32) (*model.User, error) {
 	user := &model.User{}
 	if err := r.db.Table(user.TableName()).Where("id = ?", id).First(user).Error; err != nil {
 		return nil, err
@@ -38,7 +38,7 @@ func (r *userRepository) GetByID(ctx context.Context, id int32) (*model.User, er
 	return user, nil
 }
 
-func (r *userRepository) GetByEmail(ctx context.Context, email string) (*model.User, error) {
+func (r *userRepository) FindByEmail(ctx context.Context, email string) (*model.User, error) {
 	user := &model.User{}
 	if err := r.db.Table(user.TableName()).Where("email = ?", email).First(user).Error; err != nil {
 		return nil, err

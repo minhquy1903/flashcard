@@ -14,7 +14,7 @@ CREATE TABLE "vocabulary" (
   "status" integer,
   "count_status" integer,
   "image" varchar,
-  "description" text,
+  "meaning" text,
   "created_at" timestamptz DEFAULT (now()),
   "updated_at" timestamptz DEFAULT (now())
 );

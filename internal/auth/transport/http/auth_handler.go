@@ -1,4 +1,4 @@
-package transport
+package http
 
 import (
 	"fmt"
@@ -10,11 +10,16 @@ import (
 )
 
 type AuthHandler struct {
-	authService *service.AuthService
+	authSvc *service.AuthService
 }
 
-func NewAuthHandler(authService *service.AuthService) *AuthHandler {
-	return &AuthHandler{authService: authService}
+func NewAuthHandler(e *echo.Echo, authSvc *service.AuthService) {
+	handler := &AuthHandler{
+		authSvc: authSvc,
+	}
+	g := e.Group("/api/auth")
+	g.POST("/register", handler.Register)
+	g.POST("/login", handler.Login)
 }
 
 func (h *AuthHandler) Register(c echo.Context) error {
@@ -24,7 +29,7 @@ func (h *AuthHandler) Register(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
 
-	if err := h.authService.Register(c.Request().Context(), req); err != nil {
+	if err := h.authSvc.Register(c.Request().Context(), req); err != nil {
 		fmt.Println(err)
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
@@ -39,7 +44,7 @@ func (h *AuthHandler) Login(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
 
-	accessToken, err := h.authService.Login(c.Request().Context(), req)
+	accessToken, err := h.authSvc.Login(c.Request().Context(), req)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
